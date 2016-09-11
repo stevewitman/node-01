@@ -6,9 +6,13 @@ var port = process.env.PORT || 8000;
 
 app.disable('x-powered-by');
 
-app.use(function(req, res) {
-  var guests = ['Mary', 'Don'];
+app.get('/guests', function(req, res) {
+  var guests = ['Kim', 'Ken'];
   res.send(guests);
+});
+
+app.use(function(req, res) {
+  res.sendStatus(404);
 });
 
 app.listen(port, function() {
