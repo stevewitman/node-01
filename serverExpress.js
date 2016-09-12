@@ -10,6 +10,13 @@ var port = process.env.PORT || 8000;
 
 app.disable('x-powered-by');
 
+app.set('view engine', 'ejs');
+
+app.get('/', function(req, res) {
+  res.render('index', {name: 'Kelly'})
+});
+
+
 app.get('/guests', function(req, res) {
   fs.readFile(guestsPath, 'utf8', function(err, guestsJSON) {
     if (err) {
@@ -37,10 +44,24 @@ app.get('/guests/:id', function(req, res) {
   });
 });
 
+app.get('/hello/:name', function(req, res) {
+  res.send('Hello, ' + req.params.name);
+});
+
+app.get("/hi", function(req, res) {
+  var name = req.query.name;
+  // res.send("Hello, ", + name);
+  res.send("Hello, " + name);
+});
+
+app.get('/*', function(req, res) {
+  res.status(404).send('Nothing here');
+});
+
 app.use(function(req, res) {
   res.sendStatus(404);
 });
 
 app.listen(port, function() {
-  console.log('Listening on port', port);
+  console.log('Go to localhost:3000/');
 });
